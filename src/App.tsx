@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { AppShell, NavItem, Sidebar, SidebarSection } from '@saas-ui/react';
+import {
+  DataGrid,
+  DataGridPagination,
+  Page,
+  PageBody,
+  PageHeader,
+} from '@saas-ui-pro/react';
 
-function App() {
+import { Box } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+
+export const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Page>
+      <PageHeader title='Users' />
+      <PageBody p='0'>
+        <DataGrid
+          isHoverable
+          isSelectable
+          isSortable
+          columns={[
+            { id: 'name', header: 'Name' },
+            { id: 'role', header: 'Role' },
+            // {
+            //   id: 'actions',
+            //   // width: '100px',
+            //   Cell: () => <Button>Edit</Button>,
+            // },
+          ]}
+          data={[{ name: 'Renata Alink', role: 'Founder' }]}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <DataGridPagination />
+        </DataGrid>
+      </PageBody>
+    </Page>
   );
-}
-
-export default App;
+};
