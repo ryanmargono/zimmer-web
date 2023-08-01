@@ -8,7 +8,7 @@ import { FiEdit3 } from 'react-icons/fi';
 import { useContext } from 'react';
 
 export const ArticlesTable = () => {
-  const { state } = useContext(ArticlesContext);
+  const { state, selectArticle } = useContext(ArticlesContext);
 
   const columns: ColumnDef<Article>[] = [
     {
@@ -18,7 +18,7 @@ export const ArticlesTable = () => {
     },
     {
       accessorKey: 'status',
-      header: '',
+      header: 'Status',
       cell: getStatusTableCell,
     },
   ];
@@ -32,7 +32,13 @@ export const ArticlesTable = () => {
         description='Add one to get started!'
       />
     ) : (
-      <DataGrid<any> columns={columns} data={state.articles} />
+      <DataGrid<any>
+        // isSelectable
+        isHoverable
+        onRowClick={(e) => selectArticle(e.original)}
+        columns={columns}
+        data={state.articles}
+      />
     );
 
   return (

@@ -15,10 +15,10 @@ import { Topic } from '../../../types/Topic';
 import { useContext } from 'react';
 
 export const TopicsList = () => {
-  const { state } = useContext(ControlPanelContext);
+  const { state, selectTopic } = useContext(ControlPanelContext);
 
   const renderListItem = (t: Topic) => (
-    <StructuredListItem onClick={(x: any) => console.log('item')}>
+    <StructuredListItem onClick={() => selectTopic(t)}>
       <StructuredListIcon
         as={FiXCircle}
         size='4'

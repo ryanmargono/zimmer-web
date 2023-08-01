@@ -8,6 +8,7 @@ import { Articles } from './pages/Articles/Articles';
 import { Auth } from './pages/Auth/Auth';
 import { AuthLayout } from './layouts/AuthLayout';
 import { ControlPanel } from './pages/ControlPanel/ControlPanel';
+import { Dashboard } from './pages/Dashboard/Dashboard';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import ReactDOM from 'react-dom/client';
 import { Verify } from './pages/Verify/Verify';
@@ -36,6 +37,8 @@ root.render(
 
             <Route element={<ProtectedRoute />}>
               <Route element={<AppLayout />}>
+                <Route path='/' element={<Dashboard />} />
+                <Route path='/home' element={<Dashboard />} />
                 <Route path='/research' element={<ControlPanel />} />
                 <Route path='/articles' element={<Articles />} />
               </Route>

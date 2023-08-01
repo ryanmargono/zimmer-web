@@ -17,6 +17,7 @@ type ContextValues = {
   state: State;
 
   setState: any;
+  selectArticle: any;
 };
 
 const DEFAULT_STATE: State = {
@@ -36,6 +37,9 @@ export const ArticlesProvider = (props: any) => {
   useEffect(() => {
     fetch();
   }, []);
+
+  const selectArticle = (a: SerializedArticle) =>
+    setState((state) => ({ ...state, selectedArticle: a }));
 
   const fetch = async () => {
     const articles = await ZimmerClient.graphQlRequest<Article[]>(
@@ -58,6 +62,7 @@ export const ArticlesProvider = (props: any) => {
   const contextValues: ContextValues = {
     state,
     setState,
+    selectArticle,
   };
 
   console.log(state);

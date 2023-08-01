@@ -19,6 +19,7 @@ export type Article = {
 export type SerializedArticle = Article & {
   articleContent: {
     title: string;
+    metaDescription: string;
     introduction: string;
     sectionASubheading: string;
     sectionAParagraphs: string[];
