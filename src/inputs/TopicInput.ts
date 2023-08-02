@@ -1,6 +1,6 @@
+import { IdInput, QueryArgs } from './CommonInputs';
 import { mutation, params, query, types } from 'typed-graphqlify';
 
-import { QueryArgs } from './CommonInputs';
 import { Topic } from '../types/Topic';
 import { serializeInput } from '../helpers/GraphqlHelper';
 
@@ -17,5 +17,13 @@ export const getTopicsQuery = (args: QueryArgs<Topic>) =>
     getTopics: params(
       { ...serializeInput(args) },
       { id: types.string, subject: types.string }
+    ),
+  }).toString();
+
+export const deleteTopicMutation = (input: IdInput) =>
+  mutation({
+    hardDeleteTopic: params(
+      { input: { ...serializeInput(input) } },
+      { id: types.string }
     ),
   }).toString();

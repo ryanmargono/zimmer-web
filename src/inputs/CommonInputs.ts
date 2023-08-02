@@ -17,3 +17,7 @@ export type QueryArgs<T> = {
     propertyValue: string;
   };
 };
+
+export type IdInput = {
+  id: string;
+};

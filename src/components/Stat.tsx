@@ -33,7 +33,7 @@ export const Stat = (props: Props) => {
       <Stack spacing={{ base: '5', md: '6' }}>
         <Stack direction='row' justify='space-between'>
           <HStack spacing='4'>
-            <Square size='12' bg='bg.accent.subtle' borderRadius='md'>
+            <Square size='12' bg='purple' borderRadius='md'>
               <Icon as={icon} boxSize='6' color='fg.accent.default' />
             </Square>
             <Text fontWeight='medium'>{label}</Text>
@@ -43,15 +43,15 @@ export const Stat = (props: Props) => {
         <Stack spacing='4'>
           <Heading size={{ base: 'sm', md: 'md' }}>{value}</Heading>
           <HStack spacing='1' fontWeight='medium'>
-            <Icon
+            {/* <Icon
               color={delta.isUpwardsTrend ? 'success' : 'error'}
               as={delta.isUpwardsTrend ? FiArrowUpRight : FiArrowDownRight}
               boxSize='5'
-            />
-            <Text color={delta.isUpwardsTrend ? 'success' : 'error'}>
+            /> */}
+            {/* <Text color={delta.isUpwardsTrend ? 'success' : 'error'}>
               {delta.value}
             </Text>
-            <Text color='fg.muted'>vs last week</Text>
+            <Text color='fg.muted'>vs last week</Text> */}
           </HStack>
         </Stack>
       </Stack>

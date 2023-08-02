@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { deleteTopicMutation, getTopicsQuery } from '../../inputs/TopicInput';
 
 import { AppContext } from '../../AppContext';
 import { Context } from 'vm';
@@ -7,7 +8,6 @@ import { Loading } from '../../components/Loading';
 import { Topic } from '../../types/Topic';
 import { ZimmerClient } from '../../clients/ZimmerClient';
 import { getKeywordsQuery } from '../../inputs/KeywordInput';
-import { getTopicsQuery } from '../../inputs/TopicInput';
 
 export type State = {
   topics: Topic[];
@@ -22,6 +22,7 @@ type ContextValues = {
 
   setState: any;
   selectTopic: any;
+  deleteTopic: any;
 };
 
 const DEFAULT_STATE: State = {
@@ -43,6 +44,22 @@ export const ControlPanelProvider = (props: any) => {
   useEffect(() => {
     fetch();
   }, []);
+
+  const deleteTopic = async (t: Topic) => {
+    const topics = state.topics.filter((topic) => topic.id !== t.id);
+    const keywords = state.keywords.filter((k) => k.topic.id !== t.id);
+    const selectedTopic = topics[0];
+    const selectedKeywords = keywords.filter((k) => k.topic.id === selectedTopic.id);
+
+    await setState(() => ({
+      topics,
+      selectedTopic,
+      keywords,
+      selectedKeywords,
+    }));
+
+    await ZimmerClient.graphQlRequest(deleteTopicMutation({ id: t.id }));
+  };
 
   const selectTopic = async (t: Topic) => {
     await setState((state) => ({
@@ -77,6 +94,7 @@ export const ControlPanelProvider = (props: any) => {
     state,
     setState,
     selectTopic,
+    deleteTopic,
   };
 
   console.log(state);

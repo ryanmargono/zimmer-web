@@ -1,11 +1,12 @@
+import { GetHistoryLogsQuery, GetStatsQuery } from '../../inputs/StatsInput';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 import { AppContext } from '../../AppContext';
 import { Context } from 'vm';
-import { GetHistoryLogsQuery } from '../../inputs/StatsInput';
 import { HistoryLog } from '../../types/HistoryLog';
 import { Keyword } from '../../types/Keyword';
 import { Loading } from '../../components/Loading';
+import { Stat } from '../../types/Stat';
 import { Topic } from '../../types/Topic';
 import { ZimmerClient } from '../../clients/ZimmerClient';
 import { getKeywordsQuery } from '../../inputs/KeywordInput';
@@ -13,6 +14,7 @@ import { getTopicsQuery } from '../../inputs/TopicInput';
 
 export type State = {
   historyLogs: HistoryLog[];
+  stats: Stat | null;
 };
 
 type ContextValues = {
@@ -21,6 +23,7 @@ type ContextValues = {
 
 const DEFAULT_STATE: State = {
   historyLogs: [],
+  stats: null,
 };
 
 export const DashboardContext = createContext<ContextValues>({
@@ -37,15 +40,25 @@ export const DashboardProvider = (props: any) => {
   }, []);
 
   const fetch = async () => {
+    await setFetchLoading(true);
+
     const historyLogs = await ZimmerClient.graphQlRequest<HistoryLog[]>(
       GetHistoryLogsQuery({
         where: { user: { id: appState.userId!! } },
         options: { limit: 10 },
       })
     );
+
+    const stats = await ZimmerClient.graphQlRequest<Stat[]>(
+      GetStatsQuery({
+        where: { user: { id: appState.userId!! } },
+        options: { limit: 1 },
+      })
+    );
     await setState((state) => ({
       ...state,
       historyLogs,
+      stats: stats[0],
     }));
 
     await setFetchLoading(false);

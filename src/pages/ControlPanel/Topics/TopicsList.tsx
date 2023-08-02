@@ -5,26 +5,22 @@ import {
   StructuredListIcon,
   StructuredListItem,
 } from '@saas-ui/react';
-import { FiEdit3, FiUsers, FiXCircle } from 'react-icons/fi';
 
-import { AddTopic } from './AddTopic';
-import { Button } from '@chakra-ui/react';
 import { ControlPanelContext } from '../ControlPanelContext';
 import { FaChevronRight } from 'react-icons/fa';
+import { FiXCircle } from 'react-icons/fi';
 import { Topic } from '../../../types/Topic';
 import { useContext } from 'react';
 
 export const TopicsList = () => {
-  const { state, selectTopic } = useContext(ControlPanelContext);
+  const { state, selectTopic, deleteTopic } = useContext(ControlPanelContext);
 
   const renderListItem = (t: Topic) => (
-    <StructuredListItem onClick={() => selectTopic(t)}>
-      <StructuredListIcon
-        as={FiXCircle}
-        size='4'
-        onClick={() => console.log('delete')}
-      />
-      <StructuredListCell flex='1'>{t.subject}</StructuredListCell>
+    <StructuredListItem>
+      <StructuredListIcon as={FiXCircle} size='4' onClick={() => deleteTopic(t)} />
+      <StructuredListCell onClick={() => selectTopic(t)} flex='1'>
+        {t.subject}
+      </StructuredListCell>
       <StructuredListIcon as={FaChevronRight} size='4' />
     </StructuredListItem>
   );
